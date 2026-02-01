@@ -32,7 +32,7 @@
         main p.subtitle {
             text-align: center;
             color: #475569;
-            margin-bottom: 30px;
+            margin-bottom: 50px;
         }
 
         /* SEARCH */
@@ -67,6 +67,11 @@
             border-radius: 6px;
             border: 1px solid #cbd5f5;
             background: white;
+        }
+
+        .search-row button {
+            width: auto;
+            margin-top: 0;
         }
 
         /* RESULTS */
@@ -110,36 +115,55 @@
     </p>
 
     <div class="search-box">
-        <label>Buscar en el Corpus</label>
 
-        <div class="search-row">
-            <input type="text" placeholder="Buscar frases...">
-            <select>
-                <option>Mayo-Yoreme</option>
-                <option>Español</option>
-            </select>
-        </div>
+        <form method="GET" action="/traductor/index.php">
+            <input type="hidden" name="controller" value="user">
+            <input type="hidden" name="action" value="dashboard">
+
+            <div class="search-row">
+                <input type="text" name="q" placeholder="Buscar frases...">
+
+                <select name="idioma">
+                    <option value="mayo">Mayo-Yoreme</option>
+                    <option value="espanol">Español</option>
+                </select>
+
+                <button type="submit" class="btn btn-primary">
+                    Buscar
+                </button>
+            </div>
+        </form>
     </div>
 
     <div class="results-info">
-        Se encontraron <strong>12</strong> resultados
+        Se encontraron <strong><?php echo $total; ?></strong> resultados
     </div>
 
     <!-- RESULTADOS -->
-    <div class="result-card">
-        <div class="mayo">In jak bwika ka into jooka</div>
-        <div class="spanish">Mi casa es grande y está limpia</div>
-    </div>
+    <?php if (empty($frases)): ?>
 
     <div class="result-card">
-        <div class="mayo">Ne jiapsi betchibo ka ne betchibo iji jiapsi</div>
-        <div class="spanish">Yo trabajo mucho y me gusta trabajar bien</div>
+        No se encontraron resultados.
     </div>
 
-    <div class="result-card">
-        <div class="mayo">Taa chiokti ka baa jokot</div>
-        <div class="spanish">El sol está caliente y el agua está fría</div>
-    </div>
+    <?php else: ?>
+
+        <?php foreach ($frases as $frase): ?>
+
+            <div class="result-card">
+                <div class="mayo">
+                    <?php echo htmlspecialchars($frase['frase_mayo_yoreme']); ?>
+                </div>
+
+                <div class="spanish">
+                    <?php echo htmlspecialchars($frase['frase_espanol']); ?>
+                </div>
+            </div>
+
+        <?php endforeach; ?>
+
+    <?php endif; ?>
+
 </main>
 
 <?php

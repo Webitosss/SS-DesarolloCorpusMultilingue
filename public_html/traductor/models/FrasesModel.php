@@ -59,6 +59,32 @@
             return $resultado['total'];
         }
 
+        // Busca frases registradas
+        public function buscarFrases($texto = '', $idioma = 'mayo') {
+
+            if ($texto === '') {
+                $sql = "SELECT * FROM frases ORDER BY fecha_creacion DESC";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute();
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+
+            if ($idioma === 'espanol') {
+                $sql = "SELECT * FROM frases 
+                        WHERE frase_espanol LIKE :texto
+                        ORDER BY fecha_creacion DESC";
+            } else {
+                $sql = "SELECT * FROM frases 
+                        WHERE frase_mayo_yoreme LIKE :texto
+                        ORDER BY fecha_creacion DESC";
+            }
+
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':texto' => "%$texto%"]);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
 
     }
 
