@@ -26,6 +26,20 @@
             ]);
         }
 
+        //Edita una frase por ID
+        public function editarFrase($id, $frase_espanol, $frase_mayo_yoreme) {
+
+            $sql = "UPDATE frases SET frase_espanol = :espanol, frase_mayo_yoreme = :mayo WHERE id = :id";
+            $stmt = $this->conexion->prepare($sql);
+
+            return $stmt->execute([
+                ':espanol' => $frase_espanol,
+                ':mayo' => $frase_mayo_yoreme,
+                ':id' => $id
+            ]);
+
+        }
+
         //Elimina una frase por ID
         public function eliminarFrase($id) {
 

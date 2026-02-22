@@ -1,7 +1,7 @@
 <?php 
     require_once __DIR__ . '/../template/header.php';
 ?>
-
+ 
 <style>
 
     main {
@@ -62,9 +62,81 @@
         margin: 0;
     }
 
-    .btn-delete {
+    .btn-delete, .btn-edit {
         width: auto !important;
         margin-top: 0 !important;
+    }
+
+    .btn-edit {
+        background: #2563eb;
+        color: #fff;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+    }
+
+    .btn-edit:hover {
+        background: #1d4ed8;
+    }
+
+    .frase-actions {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    }
+
+    /* Modal de edición */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-overlay.active {
+        display: flex;
+    }
+
+    .modal-box {
+        background: #fff;
+        border-radius: 12px;
+        padding: 30px;
+        width: 450px;
+        max-width: 90%;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+
+    .modal-box h3 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        color: #2563eb;
+        font-size: 18px;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .modal-actions button {
+        margin-top: 0;
+        flex: 1;
+    }
+
+    .btn-cancel {
+        background: #e2e8f0;
+        color: #334155;
+    }
+
+    .btn-cancel:hover {
+        background: #cbd5e1;
     }
 
     .card {
@@ -193,15 +265,23 @@
                         <strong>MY:</strong> <?php echo htmlspecialchars($frase['frase_mayo_yoreme']); ?>
                     </div>
 
-                    <form method="POST" action="/traductor/index.php?controller=frases&action=eliminar" class="delete-form">
+                    <div class="frase-actions">
 
-                        <input type="hidden" name="id" value="<?php echo $frase['id']; ?>">
-
-                        <button type="submit" class="btn btn-danger btn-sm btn-delete" onclick="return confirm('¿Seguro que deseas eliminar esta frase?')">
-                            <i class="fa-solid fa-trash"></i>
+                        <button type="button" class="btn-edit" onclick="abrirModalEditar(<?php echo $frase['id']; ?>, '<?php echo htmlspecialchars(addslashes($frase['frase_espanol']), ENT_QUOTES); ?>', '<?php echo htmlspecialchars(addslashes($frase['frase_mayo_yoreme']), ENT_QUOTES); ?>')">
+                            <i class="fa-solid fa-pen-to-square"></i>
                         </button>
 
-                    </form>
+                        <form method="POST" action="/traductor/index.php?controller=frases&action=eliminar" class="delete-form">
+
+                            <input type="hidden" name="id" value="<?php echo $frase['id']; ?>">
+
+                            <button type="submit" class="btn btn-danger btn-sm btn-delete" onclick="return confirm('¿Seguro que deseas eliminar esta frase?')">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+
+                        </form>
+
+                    </div>
 
                 </div>
 
@@ -216,6 +296,46 @@
     </div>
 
 </main>
+
+<!-- Modal de edición -->
+<div class="modal-overlay" id="modalEditar">
+    <div class="modal-box">
+        <h3><i class="fa-solid fa-pen-to-square"></i> Editar frase</h3>
+        <form action="/traductor/index.php?controller=frases&action=editar" method="POST">
+            <input type="hidden" name="id" id="edit-id">
+            <div class="form-group">
+                <label>Frase en Español</label>
+                <input type="text" name="frase_espanol" id="edit-espanol" required>
+            </div>
+            <div class="form-group">
+                <label>Frase en Mayo-Yoreme</label>
+                <input type="text" name="frase_mayo_yoreme" id="edit-mayo" required>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="cerrarModalEditar()">Cancelar</button>
+                <button type="submit" class="btn btn-success">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function abrirModalEditar(id, espanol, mayo) {
+        document.getElementById('edit-id').value = id;
+        document.getElementById('edit-espanol').value = espanol;
+        document.getElementById('edit-mayo').value = mayo;
+        document.getElementById('modalEditar').classList.add('active');
+    }
+
+    function cerrarModalEditar() {
+        document.getElementById('modalEditar').classList.remove('active');
+    }
+
+    // Cerrar modal al hacer clic fuera
+    document.getElementById('modalEditar').addEventListener('click', function(e) {
+        if (e.target === this) cerrarModalEditar();
+    });
+</script>
 
 <?php 
     require_once __DIR__ . '/../template/footer.php';

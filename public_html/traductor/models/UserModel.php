@@ -41,6 +41,8 @@
         //Obtiene un usuario por email
         public function login($email) {
 
+            $email = strtolower($email);
+
             $sql = "SELECT * FROM usuarios 
                     WHERE email = :email 
                     AND estado = 'ACTIVO'
@@ -50,7 +52,13 @@
             $stmt->bindParam(':email', $email);
             $stmt->execute();
 
-            return $stmt->fetch();
+            $user = $stmt->fetch();
+
+            if ($user && isset($user['email'])) {
+                $user['email'] = strtolower($user['email']);
+            }
+
+            return $user;
         }
 
     }

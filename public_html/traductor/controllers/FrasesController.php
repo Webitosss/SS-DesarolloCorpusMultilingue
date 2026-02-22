@@ -32,6 +32,24 @@
             }
         }
 
+        // Edita frase
+        public function editar() {
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                $id = $_POST['id'] ?? null;
+                $frase_espanol = trim($_POST['frase_espanol'] ?? '');
+                $frase_mayo = trim($_POST['frase_mayo_yoreme'] ?? '');
+
+                if ($id && $frase_espanol && $frase_mayo) {
+                    $this->model->editarFrase($id, $frase_espanol, $frase_mayo);
+                }
+
+                header('Location: /traductor/index.php?controller=admin&action=dashboard');
+                exit;
+            }
+        }
+
         // Elimina frase
         public function eliminar() {
 

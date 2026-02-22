@@ -5,7 +5,7 @@
         private $host = 'localhost';
         private $db = 'mayoyoreme';
         private $user = 'mayoyoreme';
-        private $password = '!@$%#yaX';
+        private $password = '!@$%#yaX2026_BD';
 
 
         public function __construct(){
