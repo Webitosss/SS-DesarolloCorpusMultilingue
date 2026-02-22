@@ -4,7 +4,7 @@
 
     class AuthController {
 
-        //Registra a un nuevo usuario con sus respectivos mensajes de error
+        /* //Registra a un nuevo usuario con sus respectivos mensajes de error
         public function register() {
 
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -43,7 +43,7 @@
             } else {
                 die("Error al registrar usuario");
             }
-        }
+        } */
 
         //Obtiene un usuario por email con sus respectivos mensajes de error
         public function login() {
@@ -100,7 +100,7 @@
             session_destroy();
             session_regenerate_id(true);
 
-            header("Location: /traductor/index.php?controller=auth&action=login");
+            header("Location: /traductor/index.php?controller=user&action=dashboard");
             exit;
         }
 

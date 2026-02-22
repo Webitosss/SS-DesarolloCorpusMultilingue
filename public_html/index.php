@@ -366,6 +366,7 @@ if ($fp) {
       font-size: 0.85rem;
       margin-top: 0.25rem;
     }
+
   </style>
 </head>
 <body>
@@ -378,6 +379,7 @@ if ($fp) {
           <!-- Logo de la aplicación como imagen PNG -->
           <img src="img/logo.png" alt="Logo Traductor Mayo-Yoreme a Español" class="app-logo" />
         </div>
+       
         <div class="header-text">
           <div class="tag">
             <span class="icon-dot"></span>
@@ -415,7 +417,7 @@ if ($fp) {
                 Puedes acceder a la aplicación web del traductor desde el siguiente botón. 
                 Se recomienda utilizar un navegador web actualizado para una mejor experiencia de uso.
               </p>
-              <a class="cta-button" href="https://mayo-yoreme.uas.edu.mx/traductor/views/auth/login.php">
+              <a class="cta-button" href="/traductor/index.php?controller=user&action=dashboard">
                 <span>Ingresar al Traductor</span> 
                 <span class="icon-arrow">↗</span>
               </a>

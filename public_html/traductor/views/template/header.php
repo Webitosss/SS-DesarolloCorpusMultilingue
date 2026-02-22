@@ -100,34 +100,37 @@
 <body>
 
 <?php
-    if (!isset($_SESSION['user_id'])) {
-        header("Location: /traductor/views/auth/login.php");
-        exit;
-    }
+    $isLoggedIn = isset($_SESSION['user_id']);
 ?>
 
 <header>
     <div class="logo"><i class="fa-solid fa-language"></i> Corpus Mayo-Yoreme</div>
 
     <div class="user">
-        <span class="username"><?php echo htmlspecialchars($_SESSION['nombre']); ?></span>
-        <div class="dropdown">
-            <button class="profile-toggle dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <div class="avatar">
-                    <?php
-                        $iniciales = strtoupper(
-                            substr($_SESSION['nombre'], 0, 1)
-                        );
-                        echo $iniciales;
-                    ?>
-                </div>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li>
-                    <a class="dropdown-item" href="/traductor/index.php?controller=auth&action=logout">Cerrar sesión</a>
-                </li>
-            </ul>
-        </div>
+        <?php if ($isLoggedIn): ?>
+            <span class="username"><?php echo htmlspecialchars($_SESSION['nombre']); ?></span>
+            <div class="dropdown">
+                <button class="profile-toggle dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="avatar">
+                        <?php
+                            $iniciales = strtoupper(
+                                substr($_SESSION['nombre'], 0, 1)
+                            );
+                            echo $iniciales;
+                        ?>
+                    </div>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a class="dropdown-item" href="/traductor/index.php?controller=auth&action=logout">Cerrar sesión</a>
+                    </li>
+                </ul>
+            </div>
+        <?php else: ?>
+            <a href="/traductor/index.php?controller=auth&action=login" style="text-decoration:none;color:#fff;font-size:13px;font-weight:500;background:#2563eb;padding:6px 14px;border-radius:6px;">
+                <i class="fa-solid fa-lock"></i> Admin
+            </a>
+        <?php endif; ?>
     </div>
 </header>
 

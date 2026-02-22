@@ -22,7 +22,7 @@
             return $stmt->fetch() ? true : false;
         }
 
-        //Registra un nuevo usuario
+        /* Registra un nuevo usuario
         public function register($nombre, $email, $password) {
 
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -36,7 +36,7 @@
             $stmt->bindParam(':password', $hashedPassword);
 
             return $stmt->execute();
-        }
+        } */
 
         //Obtiene un usuario por email
         public function login($email) {

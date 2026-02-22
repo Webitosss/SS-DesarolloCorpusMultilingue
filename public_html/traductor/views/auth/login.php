@@ -120,10 +120,11 @@
         <button type="submit">Ingresar</button>
     </form>
 
-    <div class="register-link">
+    <!-- Registro deshabilitado -->
+    <!-- <div class="register-link">
         ¿No tienes cuenta?
         <a href="/traductor/views/auth/register.php">Regístrate</a>
-    </div>
+    </div> -->
 </div>
 
 </body>
